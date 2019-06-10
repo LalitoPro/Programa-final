@@ -1,0 +1,48 @@
+from NumeroAmigos import *
+class NumerosAmigosArchivos:
+    def leerArchivo(self, archivo):
+        datos = []
+        elementos = []
+        file = open(archivo, 'r')
+        for f in file.readlines():
+            elementos = f.replace('\n', '').split(',')
+
+            try:
+                datos.append([int(elementos[0]), int(elementos[1])])
+            except ValueError:
+                datos.append([0, 0])
+
+        file.close()
+        del (file)
+        return datos
+
+    def generarResultados(self, lista):
+
+        rectangulo = NumeroAmigos()
+        resultados = []
+        for f in range(0, len(lista)):
+            area = rectangulo.Numeros_amigos(lista[f][0], lista[f][1])
+
+            resultados.append([area])
+
+        return resultados
+
+    def guardarResultados(self, archivo, datos, resultados):
+        file = open(archivo, 'w')
+        for f in range(0, len(datos)):
+            linea = str(datos[f][0]) + ',' + str(datos[f][1])  + ',' + str(datos[f][2])+ ',' + str(resultados[f][0])  + '\n'
+            file.write(linea)
+
+        file.close()
+        del (file)
+
+def main():
+        file = NumerosAmigosArchivos()
+        arreglo = []
+        arreglo = file.leerArchivo('datos_NumeroAmigos')
+        resultados = file.generarResultados(arreglo)
+        file.guardarResultados('resultadosNumeroAmigos.txt', arreglo, resultados)
+        #print(resultados)
+
+if __name__ == '__main__':
+    main()
